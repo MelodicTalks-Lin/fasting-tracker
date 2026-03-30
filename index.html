@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+      <title>Fasting Flow</title>
+    <meta name="description" content="16:8 断食记录、计时与日历汇总">
+    <meta name="theme-color" content="#f5f1ea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Fasting Flow">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+<body>
+    <div class="app-shell">
+          <header class="hero-card">
+                  <div class="hero-copy">
+                            <p class="eyebrow">16:8 Fasting Tracker</p>p>
+                            <h1>Fasting Flow</h1>
+                          <p class="hero-text">轻一点，坚持一点。用清爽的节奏，记录每一次断食与进食切换。</p>p>
+                  </div>div>
+                <div class="hero-actions">
+                        <button class="primary-button" id="start-fasting">开始断食</button>button>
+                        <button class="secondary-button" id="start-eating">进入饮食期</button>button>
+                </div>div>
+          </header>header>
+    
+        <main class="dashboard">
+              <section class="panel timer-panel">
+                      <div class="panel-heading">
+                                <div>
+                                              <p class="panel-label">当前进度</p>p>
+                                              <h2 id="phase-title">等待开始</h2>h2>
+                                </div>
+                                  <div class="status-pill" id="status-pill">未开始</div>
+                      </div>
+
+                        <div class="ring-wrap">
+                                    <div class="progress-ring" id="progress-ring">
+                                                  <div class="ring-core">
+                                                                  <p class="ring-caption" id="ring-caption">准备好时开始</p>p>
+                                                                  <p class="ring-time" id="ring-time">16:00:00</p>p>
+                                                                  <p class="ring-subtext" id="ring-subtext">目标断食时长</p>p>
+                                                  </div>
+                                    </div>
+                        </div>
+
+                        <div class="phase-grid">
+                                    <article class="phase-card">
+                                                  <p class="mini-label">断食期</p>p>
+                                                  <strong id="fasting-window">16 小时</strong>strong>
+                                                  <span id="fasting-detail">目标完成前保持稳定</span>span>
+                                    </article>article>
+                                    <article class="phase-card">
+                                                  <p class="mini-label">饮食期</p>p>
+                                                  <strong id="eating-window">8 小时</strong>strong>
+                                                  <span id="eating-detail">完成断食后切换</span>span>
+                                    </article>article>
+                        </div>
+
+                        <div class="quick-actions">
+                                    <button class="ghost-button" id="complete-day">标记今日完成</button>button>
+                                    <button class="ghost-button danger" id="reset-cycle">重置今天</button>button>
+                        </div>
+              </section>section>
+
+                <section class="panel stats-panel">
+                          <div class="panel-heading">
+                                      <div>
+                                                    <p class="panel-label">本月汇总</p>p>
+                                                    <h2>完成趋势</h2>
+                                      </div>
+                          </div>
+                
+                        <div class="stats-grid">
+                                  <article class="stat-card">
+                                              <p>本月完成</p>
+                                              <strong id="completed-days">0</strong>strong>
+                                              <span>天</span>
+                                  </article>article>
+                                  <article class="stat-card">
+                                              <p>当前连续</p>
+                                              <strong id="current-streak">0</strong>strong>
+                                              <span>天</span>
+                                  </article>article>
+                                  <article class="stat-card">
+                                              <p>最佳连续</p>
+                                              <strong id="best-streak">0</strong>strong>
+                                              <span>天</span>
+                                  </article>article>
+                                  <article class="stat-card">
+                                              <p>总断食</p>
+                                              <strong id="total-fasting-hours">0</strong>strong>
+                                              <span>小时</span>
+                                  </article>article>
+                        </div>
+                </section>section>
+        
+              <section class="panel history-panel">
+                      <div class="panel-heading">
+                                <div>
+                                            <p class="panel-label">今日记录</p>
+                                            <h2>周期轨迹</h2>
+                                </div>
+                      </div>
+              
+                      <div class="timeline" id="timeline"></div>
+              </section>section>
+        
+              <section class="panel calendar-panel">
+                      <div class="panel-heading">
+                                <div>
+                                            <p class="panel-label">日历</p>
+                                            <h2 id="calendar-title">本月记录</h2>
+                                </div>
+                                <div class="calendar-nav">
+                                            <button class="icon-button" id="prev-month" aria-label="上个月">‹</button>button>
+                                            <button class="icon-button" id="next-month" aria-label="下个月">›</button>button>
+                                </div>
+                      </div>
+              
+                      <div class="calendar-legend">
+                                <span><i class="legend-dot success"></i>i>完成</span>
+                                <span><i class="legend-dot partial"></i>i>进行中</span>
+                                <span><i class="legend-dot missed"></i>i>未完成</span>
+                      </div>
+              
+                      <div class="calendar-weekdays">
+                                <span>一</span>
+                                <span>二</span>
+                                <span>三</span>
+                                <span>四</span>
+                                <span>五</span>
+                                <span>六</span>
+                                <span>日</span>
+                      </div>
+                      <div class="calendar-grid" id="calendar-grid"></div>
+              </section>section>
+        </main>main>
+    </div>
+
+  <template id="timeline-item-template">
+      <article class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+                    <p class="timeline-title"></p>
+                    <p class="timeline-meta"></p>
+            </div>
+      </article>article>
+  </template>template>
+
+  <script src="app.js"></script>
+</body>
+</html>html></p></p></span></span></p></h2>
+                                      </div>
+                                </div></h1>
+</body></title>
+  </head>
